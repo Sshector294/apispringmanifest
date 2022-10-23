@@ -1,83 +1,33 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: apispring # Set the name of the deployment
-spec: 
+  name: apispring
+spec:
+  replicas: 2
   selector:
     matchLabels:
       app: apispring
-  replicas: 2 # Set the number of pods
-  template: 
+  template:
     metadata:
-      labels: 
+      labels:
         app: apispring
     spec:
       containers:
-      - name: apispring # Sets the container name
-        image: sshector294/apispring:1 # Sets the container image
+      - name: apispring
+        image: sshector294/apispring:1
         ports:
-        - containerPort: 8000 # Exposes container port
+        - containerPort: 8080
+# service type loadbalancers
 ---
-# apiVersion: v1
-# kind: Service
-# metadata:
-#   name: vueapp-service # Set the name of the service
-# spec:
-#   selector:
-#     app: vueapp
-#   ports:
-#   - port: 8000 # Set the service port
-#     protocol: TCP
-#     targetPort: 80 # Set the service target port
 apiVersion: v1
 kind: Service
 metadata:
-  name: lb-service
-  labels:
-    app: lb-service
+  name: apispring-svc
 spec:
-  type: LoadBalancer
-  ports:
-  - port: 8000
-    targetPort: 80
   selector:
     app: apispring
-
-# apiVersion: apps/v1
-# kind: Deployment
-# metadata:
-#   creationTimestamp: null
-#   labels:
-#     app: vue-app
-#   name: vue-app
-# spec: 
-#   replicas: 3
-#   selector:
-#     matchLabels:
-#       app: vue-app
-#   strategy: {}
-#   template:
-#     metadata:
-#       creationTimestamp: null
-#       labels:
-#         app: vue-app
-#     spec:
-#       containers:
-#       - image: sshector294/vueapp:2
-#         name: vue-app
-#         resources: {}
-# status: {}
-# ---
-# apiVersion: v1
-# kind: Service
-# metadata:
-#   name: lb-service
-#   labels:
-#     app: lb-service
-# spec:
-#   type: LoadBalancer
-#   ports:
-#   - port: 80
-#     targetPort: 5000
-#   selector:
-#     app: vue-app
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+  type: LoadBalancer
