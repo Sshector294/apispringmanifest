@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: apispring
+  name: apispringdb
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: apispring
+      app: apispringdb
   template:
     metadata:
       labels:
-        app: apispring
+        app: apispringdb
     spec:
       containers:
-      - name: apispring
-        image: sshector294/apispring:1
+      - name: apispringdb
+        image: sshector294/apisprindb:1
         ports:
         - containerPort: 8080
 # service type loadbalancers
@@ -22,10 +22,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: apispring-svc
+  name: apispringdb-svc
 spec:
   selector:
-    app: apispring
+    app: apispringdb
   ports:
     - protocol: TCP
       port: 8080
