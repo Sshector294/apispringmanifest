@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: apispringdb
-        image: sshector294/apispringdb:3
+        image: sshector294/apispringdb:4
         ports:
         - containerPort: 8080
 # service type loadbalancers
